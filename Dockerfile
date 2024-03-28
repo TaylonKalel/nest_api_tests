@@ -1,5 +1,5 @@
 # Use a imagem oficial do Node.js como base
-FROM node:18.15.0-slim
+FROM --platform=linux/amd64 node:18.15.0-slim
 
 RUN apt install bash
 
@@ -17,10 +17,12 @@ RUN npm install
 # Copia o restante do código-fonte para o diretório de trabalho
 COPY . .
 
+RUN ["chmod", "+x", ".docker/start.sh"]
+
 # Expõe a porta 3000 (ou qualquer outra porta que seu aplicativo esteja ouvindo)
 EXPOSE 3000
 
 CMD [".docker/start.sh"]
 
 # Comando para iniciar o aplicativo
-# CMD ["nest", "run", "start:dev"]
+# CMD ["npm", "run", "start:dev"]
